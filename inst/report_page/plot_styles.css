@@ -1,0 +1,383 @@
+.main_window {
+  /*background: aliceblue;*/
+  position: relative;
+  overflow: hidden;
+  font-family: Arial;
+  height: 700px;
+  width: 1100px;
+  margin: 0 auto;
+}
+
+.load_screen {
+  position: absolute;
+  display: none;
+  height: 100%;
+  width: 100%;
+  background: black;
+  opacity: 0.8;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.head_div {
+  /*background: darkcyan;*/
+  position: relative;
+  overflow: hidden;
+  height: 50px;
+  width: 100%;
+}
+
+.top_div {
+  /*background: pink;*/
+  position: relative;
+  overflow: hidden;
+  height: 50px;
+  width: 100%;
+}
+
+.mid_div {
+  /*background: lightblue;*/
+  position: relative;
+  overflow: hidden;
+  height: 500px;
+  width: 100%;
+}
+
+.bot_div { 
+  /*background: pink;*/
+  position: relative;
+  overflow: hidden;
+  height: 150px;
+  width: 100%;
+}
+
+.foot_div {
+  /*background: darkcyan;*/
+  position: relative;
+  overflow: hidden;
+  height: 50px;
+  width: 100%;
+}
+
+.plot_div {
+  /*background: lightgreen;*/
+  position: relative;
+  overflow: hidden;
+  float: left;
+  height: 100%;
+  width: 47.5%;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  /*
+   Introduced in IE 10.
+   See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+  */
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.plot_sep {
+  /*background: salmon;*/
+  position: relative;
+  overflow: hidden;
+  float: left;
+  height: 100%;
+  width: 5%;
+}
+
+.page_title {
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  overflow: hidden;
+  float: left;
+  height: 100%;
+  width: 100%;
+
+  text-anchor: middle;
+  font-size: 24px;
+
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  /*
+   Introduced in IE 10.
+   See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+  */
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.buttons_container {
+  /*background: lightsalmon;*/
+  position: relative;
+  overflow: hidden;
+  float: left;
+  height: 100%;
+  width: 50%;
+}
+
+/* Generated using http://css3buttongenerator.com/ */
+.btn {
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  color: #000000;
+  font-size: 11px;
+  background: #E7E7E7;
+  width: 130px;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+  outline:none;
+}
+
+.btn:hover {
+  background: #F7F7F7;
+  text-decoration: none;
+}
+
+.btn:active {
+  background: #D7D7D7;
+}
+
+.gene_search {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  color: #000000;
+  font-size: 11px;
+  background: #E7E7E7;
+  text-decoration: none;
+  outline:none;
+}
+
+.btn.toggle_side {
+  float: right;
+}
+
+.top_div .buttons_container .btn{
+  bottom: 0;
+}
+
+.main_plot .tooltip {
+  background: LightSkyBlue;
+  opacity: 0.8;
+  position: absolute;
+  overflow: hidden;
+  display: none;
+  z-index: 2;
+  padding: 6px;
+  border-radius: 6px;
+  top: 0px;
+  right: 0px;
+}
+
+.side_plot {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.side_plot.alt {
+  visibility: hidden;
+  top: 0px;
+  left: 0px;
+}
+
+.tooltip_main {
+  font-size: 14px;
+}
+
+.tooltip_side {
+  background: LightSkyBlue;
+  position: absolute;
+  text-align: center;
+  width: auto;
+  height: auto;
+  display: none;
+  padding: 4px;
+  font-size: 12px;
+  color: black;
+  opacity: 0.8;
+  border: 1px solid;
+  border-radius: 10px;
+  border-style: none;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.main_path {
+  stroke: black;
+  stroke-width: 2px;
+  stroke-dasharray: 3 3;
+}
+
+.plot {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.back {
+  pointer-events: none;
+}
+
+.front {
+  pointer-events: none;
+}
+
+.front_circle {
+  pointer-events: none;
+  stroke: white;
+  stroke-width: 2px;
+}
+
+path {
+  pointer-events: none;
+}
+
+.bars {
+  pointer-events: auto;
+}
+
+.guide_line {
+  stroke-width: 1px;
+  stroke-dasharray: 3 3;
+}
+
+.tagwise_sa {
+  stroke: red;
+  stroke-width; 2;
+  fill: none;
+}
+
+.axis {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  /*
+   Introduced in IE 10.
+   See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+  */
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis_text {
+  text-anchor: middle;
+  font-size: 16px;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  /*
+   Introduced in IE 10.
+   See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+  */
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.title {
+  position: absolute;
+  text-anchor: middle;
+  font-size: 20px;
+  text-decoration: underline;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  /*
+   Introduced in IE 10.
+   See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+  */
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Allow scrolling in autocomplete */
+.ui-autocomplete {
+  height: 80px; 
+  overflow-y: scroll; 
+  overflow-x: hidden;
+}
+
+.ui-widget {
+  font-size: 12px;
+}
+
+.spinner {
+  margin: 403px 484px 403px 484px;
+  width: 132px;
+  text-align: center;
+  float: left;
+  opacity: 1;
+}
+
+.spinner > div {
+  width: 40px;
+  height: 40px;
+  background-color: #333;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
+  animation: bouncedelay 1.4s infinite ease-in-out;
+  /* Prevent first frame from flickering when animation starts */
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0.0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes bouncedelay {
+  0%, 80%, 100% { 
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 40% { 
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
+
+@keyframes blink {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes blink {
+  0% { opacity: 1.0; }
+  50% { opacity: 0.0; }
+  100% { opacity: 1.0; }
+}
+
+.blink {
+  animation: blink 1s step-start 0s infinite;
+  -webkit-animation: blink 1s step-start 0s infinite;
+}

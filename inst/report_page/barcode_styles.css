@@ -1,0 +1,31 @@
+div.tooltip_barcode {
+  font-size: 12px;
+  width: 120px;
+  background: LightSkyBlue;
+  opacity: 0.8;
+  position: absolute;
+  overflow: hidden;
+  display: none;
+  z-index: 2;
+  padding: 6px;
+  border-radius: 6px;
+  top: 20px;
+}
+
+.mid_div.top_barcode,
+.mid_div.bot_barcode {
+  /*background: lightblue;*/
+  position: relative;
+  overflow: hidden;
+  height: 300px;
+  width: 100%;
+}
+
+.mid_div.top_worm,
+.mid_div.bot_worm {
+  /*background: lightblue;*/
+  position: relative;
+  overflow: hidden;
+  height: 0px;
+  width: 100%;
+}

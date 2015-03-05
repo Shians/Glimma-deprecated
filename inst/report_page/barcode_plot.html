@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<meta charset='utf-8' />
+<html lang='en'>
+<head>
+	<link rel='stylesheet' href='./js/jquery-ui.min.css'></link>
+	<script type='text/javascript' src='./js/d3.min.js'></script>
+	<script type='text/javascript' src='./js/jquery-2.1.1.min.js'></script>
+	<script type='text/javascript' src='./js/jquery-ui.min.js'></script>
+	
+	<script type='text/javascript' src='utilities.js'></script>
+	<script type='text/javascript' src='barcode_data.js'></script>
+	<script type='text/javascript' src='barcode_plot.js'></script>
+
+	<link rel='stylesheet' href='plot_styles.css'></link>
+	<link rel='stylesheet' href='barcode_styles.css'></link>
+
+	<title>Barcode Plot</title>
+</head>
+
+<body bgcolor='#FAFAFA'>
+	<div class='main_window'>
+		<div class='load_screen'>
+		    <div class="spinner">
+				<div class="bounce1"></div>
+				<div class="bounce2"></div>
+				<div class="bounce3"></div>
+			</div>
+		</div>
+
+		<div class='top_div'>
+			<div class='buttons_container'></div>
+			<div class='buttons_container'></div>
+			<div class='page_title'></div>
+	  	</div>
+<!-- 		<div class='mid_div top_worm'>
+			<div class='worm'></div>
+		</div> -->
+	  	<div class='mid_div top_barcode'>
+	  		<div class='barcode plot top'>
+	  			<div class='tooltip_barcode'></div>
+	  		</div>
+	  	</div>
+<!-- 	  	<div class='mid_div bot_barcode'>
+	  		<div class='barcode plot bot'>
+	  			<div class='tooltip_barcode_bot'></div>
+	  		</div>
+	  	</div>
+	  	<div class='mid_div top_worm'>
+			<div class='worm'></div></div>
+		</div> -->
+		
+		<div class='bot_div'>
+
+		</div>
+	</div>
+	<script>
+		dataBarcode = dataBarcode.sort(function (a, b) { return b.stat - a.stat; });
+		dataBarcode = dataBarcode.map(function (d, i) { d['rank'] = i; return d; });
+		barcodePlot(d3.select('.barcode.plot'), dataBarcode);
+	</script>
+</body>

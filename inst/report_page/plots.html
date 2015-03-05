@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<meta charset='utf-8' />
+<html lang='en'>
+<head>
+  <link rel='stylesheet' href='./js/jquery-ui.min.css'></link>
+  <script type='text/javascript' src='plot_utils.js'></script>
+  <script type='text/javascript' src='./js/d3.min.js'></script>
+  <script type='text/javascript' src='./js/jquery-2.1.1.min.js'></script>
+  <script type='text/javascript' src='./js/jquery-ui.min.js'></script>
+
+  <link rel='stylesheet' href='plot_styles.css'></link>
+  <script type='text/javascript' src='plot_data.js'></script>
+
+  <title>Glimma Plots</title>
+</head>
+
+<body bgcolor='#FAFAFA'>
+<div class='main_window'>
+  <div class='load_screen'>
+    <div class="spinner">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+  </div>
+  <!-- <div class='head_div'></div> -->
+  <div class='top_div'>
+    <div class='buttons_container'>
+      <button class='btn tooltip_button'>Tooltip On</button>
+      <button class='btn insig_button'>Toggle Insignificant</button>
+    </div>
+    <div class='page_title'></div>
+    <div class='buttons_container'>
+      <button class='btn toggle_side'>Toggle Plot</button>
+    </div>
+  </div>
+  <div class='mid_div'>
+    <div class='plot_div main_plot'>
+      <div class='tooltip tooltip_main'></div>
+    </div>
+    <div class='plot_sep'></div>
+    <div class='plot_div side_plot_container'>
+      <div class='side_plot base'>
+        <div class='tooltip_side base'></div>
+      </div>
+      <div class='side_plot alt'>
+        <div class='tooltip_side alt'></div>
+      </div>
+    </div>
+  </div>
+  <div class='bot_div'>
+    <div class='buttons_container'>
+      
+    </div>
+  </div>
+  <!-- <div class='foot_div'></div> -->
+</div>
+
+<script>
+// Generate mapping from gene symbols to EntrezID
+var dataGID = {}
+dataMA.forEach(function (d) {
+  dataGID[d.symb] = d.GeneID;
+});
+
+// Draw MA plot
+var divMA = d3.select('.main_plot');
+maPlot(divMA, dataMA);
+
+// Draw SA plot
+var divSideAlt = d3.select('.side_plot.alt');
+saPlot(divSideAlt, dataMA, dataSA);
+
+// Bind functions to buttons
+bindMainButtons();
+bindSideButtons();
+// Set up search field
+var availableTags = dataMA.map(function(d) { return d.symb; });
+setupSearchField();
+$('.page_title').html(pageTitle)
+</script>
+</body>

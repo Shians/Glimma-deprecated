@@ -1,0 +1,13 @@
+Package: Glimma
+Type: Package
+Title: Generate interactive plots for limma output
+Version: 1.0
+Date: 2014-12-03
+Author: Shian Su
+Maintainer: Shian Su <su.s@wehi.edu.au>
+Description: Generate html interactive plots from Elist and LMArray objects from limma.
+License: GPL-3
+Depends:
+	limma
+Imports:
+	limma
