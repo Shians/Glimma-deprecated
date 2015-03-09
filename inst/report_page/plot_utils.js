@@ -468,7 +468,7 @@ function maPlot(targetDiv, data) {
 		.style('fill', function (d) { return maCol(d.col); })
 
 	drawAxis(svgMA, xScl, yScl, svgh, svgw);
-	xLabel(svgMA, 'Average Expression (LogCPM)');
+	xLabel(svgMA, 'Average Expression');
 	yLabel(svgMA, 'LogFC');
 	plotTitle(svgMA, 'MA Plot');
 }
@@ -612,7 +612,7 @@ function dotPlot(targetDiv, geneID, transition) {
 
 	if (svgDot.select('.axis_text').node() == null) {
 		// xLabel(svgDot, 'Group');
-		yLabel(svgDot, 'LogCPM');
+		yLabel(svgDot, 'Expression');
 		plotTitle(svgDot, 'Sample LogCPM');
 	}
 }
