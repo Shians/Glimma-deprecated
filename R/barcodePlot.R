@@ -18,8 +18,17 @@ glimmaBarcodePlot <- function(stats, genes, index1=TRUE, index2=NULL, gene.weigh
     stop("genes argument must be a factor or character vector")
   }
 
-  if (is.logical(index1) && !all(index1)) {
-    stop("at least one element must be selected in index1")
+  if (any(is.na(index1))) {
+    stop("index1 argument cannot contain NAs")
+  }
+
+  if (is.logical(index1)) {
+    if (!all(index1)) {
+      stop("at least one element must be selected in index1")  
+    }
+    if (length(index1) != length(stats)) {
+      stop("index1 argument must have same length as stats argment")
+    }
   }
 
   if (!is.numeric(index1) && !is.logical(index1)) {
@@ -29,6 +38,7 @@ glimmaBarcodePlot <- function(stats, genes, index1=TRUE, index2=NULL, gene.weigh
   if (quantiles[1] > quantiles[2]) {
     stop("first element of quantiles cannot be greater than second element")
   }
+
 
   #------------------------------------------------------------
   # Process input
@@ -81,6 +91,7 @@ glimmaBarcodePlot <- function(stats, genes, index1=TRUE, index2=NULL, gene.weigh
   fname <- paste(report.path, "/barcode_data.js", sep="")
 
   # Offset index values by -1 to match javascript indexing
+  # This method works in both numeric and logical vector indices compared to index1 - 1
   selection <- arrayify(paste((0:(length(stats) - 1))[index1], collapse=","))
 
   stat.name <- quotify(stat.name)
@@ -92,6 +103,8 @@ glimmaBarcodePlot <- function(stats, genes, index1=TRUE, index2=NULL, gene.weigh
 
     # Calculate worm coordinates
     avg.enrich1 <- length()
+
+    worm1 <- tricubeMovingAverage(index1, span = span.worm)/avg.enrich1
   } else {
     # Set javascript flag
     wantWorm <- "false"
