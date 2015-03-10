@@ -346,9 +346,9 @@ function barcodePlot(targetDiv, data) {
 		.attr('y', yScl(0.15))
 		.attr('width', 2)
 		.attr('height', dim.plth * 0.975 - yScl(0.15))
-		.style('fill', 'black')
-		.on('mouseover', function (d, i) { barMouseOver(d3.select(this)); })
-		.on('mouseout', function (d) { barMouseOut(d3.select(this)); });
+		.style('fill', 'black');
+		// .on('mouseover', function (d, i) { barMouseOver(d3.select(this)); })
+		// .on('mouseout', function (d) { barMouseOut(d3.select(this)); });
 
 	// Add plot and axis labels
 	// plotTitle(svgBarcode, 'Barcode Plot')
