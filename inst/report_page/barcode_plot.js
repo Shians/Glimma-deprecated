@@ -134,7 +134,15 @@ function getStatQuantiles(data) {
 	var data = data.map(function(d) { return d.stat; });
 	var len = data.length;
 	var r = d3.range(9);
-	return r.map(function(d) { return data[Math.round(d * len / r.length)]; });
+	// Return a list of the (i/9)th percentiles rounded to 2 decimal places
+	return r.map(function(d) {
+		if (d != r.length - 1) {
+			x = data[Math.round(d * len / (r.length - 1))];	
+		} else {
+			x = data[len - 1];
+		}
+		return Math.round(x*100)/100; 
+	});
 }
 
 // Function to perform left arrow action

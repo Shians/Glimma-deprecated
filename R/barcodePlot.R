@@ -1,4 +1,4 @@
-glimmaBarcodePlot <- function(stats, genes, index1=TRUE, index2=NULL, gene.weights=NULL, 
+glimmaBarcodePlot <- function(stats, genes, index=TRUE, index2=NULL, gene.weights=NULL, 
                               weights.label="Weight", labels=c("Up", "Down"), quantiles=c(-1, 1), 
                               stat.name="Statistic", annotation=NULL, worm=FALSE, span.worm=0.45,
                               dir=NULL, launch=TRUE, main=NULL) {
@@ -18,21 +18,21 @@ glimmaBarcodePlot <- function(stats, genes, index1=TRUE, index2=NULL, gene.weigh
     stop("genes argument must be a factor or character vector")
   }
 
-  if (any(is.na(index1))) {
-    stop("index1 argument cannot contain NAs")
+  if (any(is.na(index))) {
+    stop("index argument cannot contain NAs")
   }
 
-  if (is.logical(index1)) {
-    if (!all(index1)) {
-      stop("at least one element must be selected in index1")  
+  if (is.logical(index)) {
+    if (!all(index)) {
+      stop("at least one element must be selected in index")  
     }
-    if (length(index1) != length(stats)) {
-      stop("index1 argument must have same length as stats argment")
+    if (length(index) != length(stats)) {
+      stop("index argument must have same length as stats argment")
     }
   }
 
-  if (!is.numeric(index1) && !is.logical(index1)) {
-    stop("index1 argument must be numeric or logical vector")
+  if (!is.numeric(index) && !is.logical(index)) {
+    stop("index argument must be numeric or logical vector")
   }
 
   if (quantiles[1] > quantiles[2]) {
@@ -70,7 +70,7 @@ glimmaBarcodePlot <- function(stats, genes, index1=TRUE, index2=NULL, gene.weigh
   sorted.stats <- sort(stats, decreasing=TRUE)
   lowq <- length(stats) - sum(sorted.stats < quantiles[1])
   upq <- sum(sorted.stats > quantiles[2])
-  # Offset by -1 to match javascript index1ing
+  # Offset by -1 to match javascript indexing
   quantiles.data <- arrayify(paste(c(upq, lowq) - 1, collapse=","))
 
   # Create directory for 
@@ -91,8 +91,8 @@ glimmaBarcodePlot <- function(stats, genes, index1=TRUE, index2=NULL, gene.weigh
   fname <- paste(report.path, "/barcode_data.js", sep="")
 
   # Offset index values by -1 to match javascript indexing
-  # This method works in both numeric and logical vector indices compared to index1 - 1
-  selection <- arrayify(paste((0:(length(stats) - 1))[index1], collapse=","))
+  # This method works in both numeric and logical vector indices compared to index - 1
+  selection <- arrayify(paste(match((1:(length(stats)))[index], order(stats, decreasing=TRUE)) - 1, collapse=","))
 
   stat.name <- quotify(stat.name)
 
@@ -104,7 +104,7 @@ glimmaBarcodePlot <- function(stats, genes, index1=TRUE, index2=NULL, gene.weigh
     # Calculate worm coordinates
     avg.enrich1 <- length()
 
-    worm1 <- tricubeMovingAverage(index1, span = span.worm)/avg.enrich1
+    worm1 <- tricubeMovingAverage(index, span = span.worm)/avg.enrich1
   } else {
     # Set javascript flag
     wantWorm <- "false"
