@@ -1,3 +1,0 @@
-function mdsPlot(targetDiv, data) {
-	
-}

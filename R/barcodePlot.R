@@ -110,13 +110,15 @@ glimmaBarcodePlot <- function(stats, genes, index1=TRUE, index2=NULL, gene.weigh
     wantWorm <- "false"
   }
 
+  plot.labels <- arrayify(paste(quotify(labels), collapse=","))
+
   #------------------------------------------------------------
   # Output
   #------------------------------------------------------------
   
   # Write data out to file
-  printJsonToFile(c(json, selection, quantiles.data, stat.name, wantWorm), filename=fname, 
-                  varname=c("dataBarcode", "barcodeSubset", "barcodeQuantiles", "barcodeStatName", "wantWorm"))
+  printJsonToFile(c(json, selection, quantiles.data, stat.name, plot.labels, wantWorm), filename=fname, 
+                  varname=c("dataBarcode", "barcodeSubset", "barcodeQuantiles", "barcodeStatName", "barcodeLabels", "wantWorm"))
   
   # Launch web page if requested
   if (launch) {

@@ -51,7 +51,7 @@ makeJSON <- function(df) {
 
 # Function to convert the aveExp, LogFc, symb, pVal and decideTest of MArrayLM
 # to json format
-makeMAjson.MArrayLM <- function(x, coef=NULL, pval=0.05) {
+makeMAjson.MArrayLM <- function(x, coef=NULL, pval=0.05, adjust.method="BH") {
   if (is.null(coef)) {
     stop("coef not specified")
   }
@@ -81,12 +81,11 @@ makeMAjson.MArrayLM <- function(x, coef=NULL, pval=0.05) {
   LogFC <- as.numeric(x$coefficients[, coef])
   AvgExpr <- as.numeric(x$Amean)
   Log2Sigma <- as.numeric(log2(x$sigma))
-  # Take the second column of design matrix to perform test on
-  col <- sapply(decideTests(x[,coef], p.value=pval), toCol)
+  # Take the selected column of design matrix to perform test on
+  col <- sapply(decideTests(x[,coef], p.value=pval, adjust.method=adjust.method), toCol)
   symb <- as.character(x$genes$Symbols)
-  pval <- p.adjust(x$p.value[, coef], method="BH")
-  dframe <- data.frame(cbind(GeneID, LogFC, AvgExpr,
-                              Log2Sigma, col, symb, pval))
+  pval <- p.adjust(x$p.value[, coef], method=adjust.method)
+  dframe <- data.frame(cbind(GeneID, LogFC, AvgExpr, Log2Sigma, col, symb, pval))
 
   # Convert to character then numeric to ensure factors are converted correctly
   for (col in c("LogFC", "AvgExpr", "pval", "Log2Sigma")) {
@@ -238,7 +237,8 @@ printJsonToFile <- function(json, filename, varname) {
 }
 
 # Function to generate relevant json objects given EList and MAarrayLM
-createJson <- function(MArrayLM, Elist, sample.groups, labels, coef=NULL, dir=NULL, main=NULL) {
+createJson <- function(MArrayLM, Elist, sample.groups, labels, p.value=p.value,
+                        adjust.method="BH", coef=NULL, dir=NULL, main=NULL) {
   if (is.null(dir)) {
     path <- "plot_data.js"
   } else {
@@ -255,7 +255,7 @@ createJson <- function(MArrayLM, Elist, sample.groups, labels, coef=NULL, dir=NU
     main <- paste("\"", main, "\"")
   }
 
-  maJson <- makeMAjson(MArrayLM, coef=coef)
+  maJson <- makeMAjson(MArrayLM, p.value=p.value, coef=coef, adjust.method=adjust.method)
   saJson <- makeSAjson(MArrayLM)
   dotJson <- makeDotjson(Elist, sample.groups, labels)
   factJson <- makeFactjson(sample.groups)
@@ -264,8 +264,8 @@ createJson <- function(MArrayLM, Elist, sample.groups, labels, coef=NULL, dir=NU
 }
 
 # Function to write report
-makeInteractivePlots <- function(object, y, groups, labels=NULL, coef=NULL,
-                                  dir=NULL, launch=TRUE, main=NULL) {
+glimmaMAPlot <- function(object, y, groups, p.value=0.05, lfc=0, adjust.method="BH",
+                         labels=NULL, coef=NULL, dir=NULL, launch=TRUE, main=NULL) {
   if (is.null(coef)) {
     stop("coef argument must be specified")
   }
@@ -281,12 +281,14 @@ makeInteractivePlots <- function(object, y, groups, labels=NULL, coef=NULL,
     file.copy(from=page.path, to=wd, recursive=TRUE)
 
     report.path <- paste(wd, "/report_page", sep="")
-    createJson(object, y, sample.groups=groups, labels=labels, coef=coef, dir=report.path, main=main)
+    createJson(object, y, sample.groups=groups, labels=labels, p.value=p.value, 
+                adjust.method=adjust.method, coef=coef, dir=report.path, main=main)
   } else {
     file.copy(from=page.path, to=dir, recursive=TRUE)
 
     report.path <- paste(dir, "/report_page", sep="")
-    createJson(object, y, sample.groups=groups, labels=labels, coef=coef, dir=report.path, main=main)
+    createJson(object, y, sample.groups=groups, labels=labels, p.value=p.value, 
+                adjust.method=adjust.method, coef=coef, dir=report.path, main=main)
   }
 
   # Launch web page if requested
