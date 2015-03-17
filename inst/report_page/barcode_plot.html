@@ -54,8 +54,11 @@
 		</div>
 	</div>
 	<script>
+		// Sort barcode data and append rank to each entry
 		dataBarcode = dataBarcode.sort(function (a, b) { return b.stat - a.stat; });
 		dataBarcode = dataBarcode.map(function (d, i) { d['rank'] = i; return d; });
+		// Set page title
+		$('.page_title').html(pageTitle);
 		barcodePlot(d3.select('.barcode.plot'), dataBarcode);
 	</script>
 </body>
