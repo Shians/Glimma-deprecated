@@ -49,20 +49,23 @@ makeJSON <- function(df) {
   paste("[", paste(temp, collapse=","), "]", sep="")
 }
 
-# Function to convert the aveExp, LogFc, symb, pVal and decideTest of MArrayLM
+# Function to convert the aveExp, LogFc, symb, p.value and decideTest of MArrayLM
 # to json format
-makeMAjson.MArrayLM <- function(x, coef=NULL, pval=0.05, adjust.method="BH") {
+makeMAjson.MArrayLM <- function(x, genes=NULL, coef=NULL, p.value=0.05, adjust.method="BH") {
   if (is.null(coef)) {
     stop("coef not specified")
   }
+
   if (!is(x, "MArrayLM")) {
     stopType("MArrayLM")
   }
-  req <- c("coefficients", "Amean", "p.value", "genes")
+
+  req <- c("coefficients", "Amean", "p.value")
   if (any(is.na(match(req, names(x))))) {
     str <- paste(req[is.na(match(req, names(x)))], collapse=", ")
     stop(paste("data for", str, "missing"))
   }
+
   # Function to convert (-1, 0, 1) to (red, black, green)
   toCol <- function(num) {
     if (num == 0) {
@@ -82,8 +85,14 @@ makeMAjson.MArrayLM <- function(x, coef=NULL, pval=0.05, adjust.method="BH") {
   AvgExpr <- as.numeric(x$Amean)
   Log2Sigma <- as.numeric(log2(x$sigma))
   # Take the selected column of design matrix to perform test on
-  col <- sapply(decideTests(x[,coef], p.value=pval, adjust.method=adjust.method), toCol)
-  symb <- as.character(x$genes$Symbols)
+  col <- sapply(decideTests(x[,coef], p.value=p.value, adjust.method=adjust.method), toCol)
+  if (!is.null(genes)) {
+    symb <- genes  
+  } else if (!is.null(x$genes$Symbols)) {
+    symb <- as.character(x$genes$Symbols)
+  } else {
+    stop("no gene symbols specified")
+  }
   pval <- p.adjust(x$p.value[, coef], method=adjust.method)
   dframe <- data.frame(cbind(GeneID, LogFC, AvgExpr, Log2Sigma, col, symb, pval))
 
@@ -198,21 +207,6 @@ makeSAjson.MArrayLM <- function(fit) {
   output
 }
 
-# Function to generate list of gene symbols for autocomplete
-makeSymbolList.MArrayLM <- function(fit) {
-  symb <- as.character(fit$genes$Symbols)
-  symb <- unique(symb)
-  symb <- symb[!is.na(symb)]
-
-  output <- paste('"', symb, '"', sep="")
-  output <- paste(output, collapse=", ")
-  output <- paste("[", output, "]", sep="")
-
-  class(output) <- "json"
-
-  output
-}
-
 # Function to make json object ouf of factor levels
 makeFactjson <- function(sample.groups) {
   sample.groups <- as.factor(sample.groups)
@@ -237,7 +231,7 @@ printJsonToFile <- function(json, filename, varname) {
 }
 
 # Function to generate relevant json objects given EList and MAarrayLM
-createJson <- function(MArrayLM, Elist, sample.groups, labels, p.value=p.value,
+createJson <- function(MArrayLM, Elist, sample.groups, genes, labels, p.value=p.value,
                         adjust.method="BH", coef=NULL, dir=NULL, main=NULL) {
   if (is.null(dir)) {
     path <- "plot_data.js"
@@ -255,7 +249,7 @@ createJson <- function(MArrayLM, Elist, sample.groups, labels, p.value=p.value,
     main <- paste("\"", main, "\"")
   }
 
-  maJson <- makeMAjson(MArrayLM, p.value=p.value, coef=coef, adjust.method=adjust.method)
+  maJson <- makeMAjson(MArrayLM, genes=genes, p.value=p.value, coef=coef, adjust.method=adjust.method)
   saJson <- makeSAjson(MArrayLM)
   dotJson <- makeDotjson(Elist, sample.groups, labels)
   factJson <- makeFactjson(sample.groups)
@@ -264,14 +258,19 @@ createJson <- function(MArrayLM, Elist, sample.groups, labels, p.value=p.value,
 }
 
 # Function to write report
-glimmaMAPlot <- function(object, y, groups, p.value=0.05, lfc=0, adjust.method="BH",
-                         labels=NULL, coef=NULL, dir=NULL, launch=TRUE, main=NULL) {
+glimmaMAPlot <- function(object, y, groups, genes=NULL, p.value=0.05, lfc=0, adjust.method="BH",
+                         labels=NULL, coef=NULL, baseURL="none", searchBy="Symbol", linkBy="GeneID", 
+                         dir=NULL, launch=TRUE, main=NULL) {
   if (is.null(coef)) {
     stop("coef argument must be specified")
   }
 
   if (!is(groups, "factor") && !is(groups, "character")) {
     stop("groups arugment must be character or factor vector")
+  }
+
+  if (is.null(genes) && is.na(match("genes", names(object)))) {
+    stop("please provide gene annotations in genes argument or as attribute of object")
   }
 
   page.path <- system.file("report_page", package="Glimma")
@@ -281,13 +280,14 @@ glimmaMAPlot <- function(object, y, groups, p.value=0.05, lfc=0, adjust.method="
     file.copy(from=page.path, to=wd, recursive=TRUE)
 
     report.path <- paste(wd, "/report_page", sep="")
-    createJson(object, y, sample.groups=groups, labels=labels, p.value=p.value, 
+    createJson(object, y, sample.groups=groups, genes=genes, labels=labels, p.value=p.value, 
                 adjust.method=adjust.method, coef=coef, dir=report.path, main=main)
   } else {
     file.copy(from=page.path, to=dir, recursive=TRUE)
 
     report.path <- paste(dir, "/report_page", sep="")
-    createJson(object, y, sample.groups=groups, labels=labels, p.value=p.value, 
+    createJson(object, y, sample.groups=groups, genes=genes, labels=labels, p.value=p.value, 
+                baseURL=baseURL, searchBy=searchBy, linkBy=GeneID,
                 adjust.method=adjust.method, coef=coef, dir=report.path, main=main)
   }
 
