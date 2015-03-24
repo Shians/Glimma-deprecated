@@ -1,4 +1,4 @@
-glimmaBarcodePlot <- function(stats, genes, index=TRUE, index2=NULL, gene.weights=NULL, 
+interactiveBarcodePlot <- function(stats, genes, index=TRUE, index2=NULL, gene.weights=NULL, 
                               weights.label="Weight", labels=c("Up", "Down"), quantiles=c(-1, 1), 
                               stat.name="Statistic", annotation=NULL, worm=FALSE, span.worm=0.45,
                               dir=NULL, launch=TRUE, main=NULL) {

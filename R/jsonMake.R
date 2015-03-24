@@ -258,7 +258,7 @@ createJson <- function(MArrayLM, Elist, sample.groups, genes, labels, p.value=p.
 }
 
 # Function to write report
-glimmaMAPlot <- function(object, y, groups, genes=NULL, p.value=0.05, lfc=0, adjust.method="BH",
+interactiveMAPlot <- function(object, y, groups, genes=NULL, p.value=0.05, lfc=0, adjust.method="BH",
                          labels=NULL, coef=NULL, baseURL="none", searchBy="Symbol", linkBy="GeneID", 
                          dir=NULL, launch=TRUE, main=NULL) {
   if (is.null(coef)) {
