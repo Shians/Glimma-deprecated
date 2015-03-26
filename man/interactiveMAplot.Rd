@@ -1,5 +1,5 @@
-\name{interactiveplotMA}
-\alias{interactiveplotMA}
+\name{interactiveMAplot}
+\alias{interactiveMAplot}
 
 \title{
 	Interactive version of plotMA from the limma package.
@@ -48,8 +48,7 @@ interactiveMAplot(object, y, p.value=0.05, lfc=0, adjust.method="BH", groups, la
 \author{Shian Su, Matt Ritchie}
 
 \seealso{
-	\code{\link{interactivebarcodeplot}},
-	\code{\link{interactiveMDSplot}}
+	\code{\link{interactivebarcodeplot}}
 }
 \examples{
 \dontrun{
