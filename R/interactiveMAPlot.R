@@ -1,6 +1,7 @@
 # Function to generate relevant json objects given EList and MAarrayLM
 createMAJson <- function(MArrayLM, Elist, sample.groups, genes, labels, p.value=p.value,
-                        adjust.method="BH", coef=NULL, dir=NULL, main=NULL) {
+                        baseURL="http://www.ncbi.nlm.nih.gov/gene/?term=", searchBy="Symbol", 
+                        linkBy="GeneID", adjust.method="BH", coef=NULL, dir=NULL, main=NULL) {
   if (is.null(dir)) {
     path <- "plot_data.js"
   } else {
@@ -21,13 +22,17 @@ createMAJson <- function(MArrayLM, Elist, sample.groups, genes, labels, p.value=
   saJson <- makeSAjson(MArrayLM)
   dotJson <- makeDotjson(Elist, sample.groups, labels)
   factJson <- makeFactjson(sample.groups)
-  printJsonToFile(c(maJson, dotJson, saJson, factJson, main), path,
-                  c("dataMA", "dataDot", "dataSA", "dataFact", "pageTitle"))
+  baseURL <- quotify(baseURL)
+  linkBy <- quotify(linkBy)
+  searchBy <- quotify(searchBy)
+  printJsonToFile(c(maJson, dotJson, saJson, factJson, main, baseURL, linkBy, searchBy), path,
+                  c("dataMA", "dataDot", "dataSA", "dataFact", "pageTitle", "baseURL", "linkBy", "searchBy"))
 }
 
 # Function to write report
 interactiveMAPlot <- function(object, y, groups, genes=NULL, p.value=0.05, lfc=0, adjust.method="BH",
-                         labels=NULL, coef=NULL, baseURL="none", searchBy="Symbol", linkBy="GeneID", 
+                         labels=NULL, coef=NULL, baseURL="http://www.ncbi.nlm.nih.gov/gene/?term=", 
+                         searchBy="Symbol", linkBy="GeneID", 
                          dir=NULL, launch=TRUE, main=NULL) {
   if (is.null(coef)) {
     stop("coef argument must be specified")
@@ -46,18 +51,15 @@ interactiveMAPlot <- function(object, y, groups, genes=NULL, p.value=0.05, lfc=0
   if (is.null(dir)) {
     wd <- getwd()
     file.copy(from=page.path, to=wd, recursive=TRUE)
-
     report.path <- paste(wd, "/report_page", sep="")
-    createMAJson(object, y, sample.groups=groups, genes=genes, labels=labels, p.value=p.value, 
-                adjust.method=adjust.method, coef=coef, dir=report.path, main=main)
   } else {
     file.copy(from=page.path, to=dir, recursive=TRUE)
-
     report.path <- paste(dir, "/report_page", sep="")
-    createMAJson(object, y, sample.groups=groups, genes=genes, labels=labels, p.value=p.value, 
+  }
+
+  createMAJson(object, y, sample.groups=groups, genes=genes, labels=labels, p.value=p.value, 
                 baseURL=baseURL, searchBy=searchBy, linkBy=linkBy,
                 adjust.method=adjust.method, coef=coef, dir=report.path, main=main)
-  }
 
   # Launch web page if requested
   if (launch) {

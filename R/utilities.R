@@ -47,3 +47,12 @@ printJsonToFile <- function(json, filename, varname) {
   }
   close(file.con)
 }
+
+
+# Function to make json object ouf of factor levels
+makeFactjson <- function(sample.groups) {
+  sample.groups <- as.factor(sample.groups)
+  l <- levels(sample.groups)
+  l <- paste("\"", l, "\"", sep="")
+  paste("[", paste(l, collapse=", "), "]", sep="")
+}
