@@ -82,7 +82,7 @@ interactivebarcodeplot <- function(stats, genes, index=TRUE, index2=NULL, gene.w
 
   # Locate files in package library
   page.path <- system.file("report_page", package="Glimma")
-  files <- paste(page.path, c("barcode_plot.js", "barcode_plot.html", "plot_styles.css", "barcode_styles.css", "utilities.js", "js"), sep="/")
+  files <- paste(page.path, c("barcode_plot.js", "barcode_plot.html", "plot_styles.css", "barcode_styles.css", "utilities.js", "js", "css"), sep="/")
 
   # Make report page directory and copy over data
   if (substr(dir, nchar(dir), nchar(dir)) == "/") {

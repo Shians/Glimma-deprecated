@@ -47,7 +47,7 @@ interactiveMAPlot <- function(object, y, groups, genes=NULL, p.value=0.05, lfc=0
   }
 
   page.path <- system.file("report_page", package="Glimma")
-  files <- paste(page.path, c("plots.html", "plot_utils.js", "plot_styles.css", "utilities.js", "js"), sep="/")
+  files <- paste(page.path, c("plots.html", "plot_utils.js", "plot_styles.css", "utilities.js", "js", "css"), sep="/")
 
 
   if (is.null(dir)) {

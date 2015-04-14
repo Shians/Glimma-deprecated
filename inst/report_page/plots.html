@@ -3,10 +3,13 @@
 <html lang='en'>
 <head>
   <link rel='stylesheet' href='./js/jquery-ui.min.css'></link>
+  <link rel='stylesheet' href='./css/jquery.dataTables.min.css'></link>
   <script type='text/javascript' src='plot_utils.js'></script>
+  <script type='text/javascript' src='gene_table.js'></script>
   <script type='text/javascript' src='./js/d3.min.js'></script>
   <script type='text/javascript' src='./js/jquery-2.1.1.min.js'></script>
   <script type='text/javascript' src='./js/jquery-ui.min.js'></script>
+  <script type='text/javascript' src='./js/jquery.dataTables.min.js'></script>
 
   <link rel='stylesheet' href='plot_styles.css'></link>
   <script type='text/javascript' src='plot_data.js'></script>
@@ -53,7 +56,8 @@
       
     </div>
   </div>
-  <!-- <div class='foot_div'></div> -->
+  <div class="foot_div">
+  </div>
 </div>
 
 <script>
@@ -70,6 +74,10 @@ maPlot(divMA, dataMA);
 // Draw SA plot
 var divSideAlt = d3.select('.side_plot.alt');
 saPlot(divSideAlt, dataMA, dataSA);
+
+// Draw gene table
+var footer = d3.select(".foot_div")
+makeTable(footer, dataMA);
 
 // Bind functions to buttons
 bindMainButtons();
