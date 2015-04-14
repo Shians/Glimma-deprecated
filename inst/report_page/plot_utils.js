@@ -367,10 +367,12 @@ function toggleSidePlot() {
 	}
 
 	if (G_SIDE_PLOT == 1) {
+		// d3.select("button.toggle_side").html("SA Plot")
 		side_plot.style('visibility', 'hidden');
 		side_plot_alt.style('visibility', 'visible');
 		G_SIDE_PLOT = 2;
 	} else if (G_SIDE_PLOT == 2) {
+		// d3.select("button.toggle_side").html("Dot Plot")
 		side_plot.style('visibility', 'visible');
 		side_plot_alt.style('visibility', 'hidden');
 		G_SIDE_PLOT = 1;

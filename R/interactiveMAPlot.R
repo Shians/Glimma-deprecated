@@ -47,14 +47,24 @@ interactiveMAPlot <- function(object, y, groups, genes=NULL, p.value=0.05, lfc=0
   }
 
   page.path <- system.file("report_page", package="Glimma")
+  files <- paste(page.path, c("plots.html", "plot_utils.js", "plot_styles.css", "utilities.js", "js"), sep="/")
+
 
   if (is.null(dir)) {
     wd <- getwd()
-    file.copy(from=page.path, to=wd, recursive=TRUE)
     report.path <- paste(wd, "/report_page", sep="")
+    file.copy(from=page.path, to=wd, recursive=TRUE)
   } else {
-    file.copy(from=page.path, to=dir, recursive=TRUE)
-    report.path <- paste(dir, "/report_page", sep="")
+    
+    if (substr(dir, nchar(dir), nchar(dir)) == "/") {
+      dir.create(paste(dir, "report_page", sep=""), showWarnings=FALSE)
+      report.path <- paste(dir, "report_page", sep="")
+    } else {
+      dir.create(paste(dir, "report_page", sep="/"), showWarnings=FALSE)
+      report.path <- paste(dir, "report_page", sep="/")
+    }
+
+    file.copy(from=files, to=report.path, recursive=TRUE)
   }
 
   createMAJson(object, y, sample.groups=groups, genes=genes, labels=labels, p.value=p.value, 

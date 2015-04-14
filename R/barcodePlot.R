@@ -82,13 +82,19 @@ interactivebarcodeplot <- function(stats, genes, index=TRUE, index2=NULL, gene.w
 
   # Locate files in package library
   page.path <- system.file("report_page", package="Glimma")
-  files <- paste(page.path, c("barcode_plot.js", "barcode_plot.html"))
+  files <- paste(page.path, c("barcode_plot.js", "barcode_plot.html", "plot_styles.css", "barcode_styles.css", "utilities.js", "js"), sep="/")
 
-  # Copy over data
-  file.copy(from=page.path, to=dir, recursive=TRUE)
-  report.path <- paste(dir, "/report_page", sep="")
-   
-  fname <- paste(report.path, "/barcode_data.js", sep="")
+  # Make report page directory and copy over data
+  if (substr(dir, nchar(dir), nchar(dir)) == "/") {
+    dir.create(paste(dir, "report_page", sep=""), showWarnings=FALSE)
+    report.path <- paste(dir, "report_page", sep="")
+  } else {
+    dir.create(paste(dir, "report_page", sep="/"), showWarnings=FALSE)
+    report.path <- paste(dir, "report_page", sep="/")
+  }
+  file.copy(from=files, to=report.path, recursive=TRUE)
+
+  data.filename <- paste(report.path, "/barcode_data.js", sep="")
 
   # Offset index values by -1 to match javascript indexing
   # This method works in both numeric and logical vector indices compared to index - 1
@@ -119,7 +125,7 @@ interactivebarcodeplot <- function(stats, genes, index=TRUE, index2=NULL, gene.w
   #------------------------------------------------------------
   
   # Write data out to file
-  printJsonToFile(c(json, selection, quantiles.data, stat.name, plot.labels, wantWorm, plot.title), filename=fname, 
+  printJsonToFile(c(json, selection, quantiles.data, stat.name, plot.labels, wantWorm, plot.title), filename=data.filename, 
                   varname=c("dataBarcode", "barcodeSubset", "barcodeQuantiles", "barcodeStatName", "barcodeLabels", "wantWorm", "pageTitle"))
   
   # Launch web page if requested

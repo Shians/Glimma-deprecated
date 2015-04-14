@@ -147,6 +147,8 @@ function getStatQuantiles(data) {
 
 // Function to perform left arrow action
 function leftArrowAction() {
+	// Deslect all bars
+	// escAction()
 	var bars = d3.selectAll('.bars');
 	// If no bar currently selected
 	if (G_SELECTION == -1) {
@@ -168,6 +170,8 @@ function leftArrowAction() {
 
 // Function to perform right arrow action
 function rightArrowAction () {
+	// Deslect all bars
+	// escAction()
 	var bars = d3.selectAll('.bars');
 	// If no bar currently selected
 	if (G_SELECTION == -1) {
