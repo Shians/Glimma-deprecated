@@ -3,7 +3,7 @@
   position: relative;
   overflow: hidden;
   font-family: Arial;
-  height: 1100px;
+  height: 1000px;
   width: 1100px;
   margin: 0 auto;
 }
@@ -47,7 +47,7 @@
   /*background: pink;*/
   position: relative;
   overflow: hidden;
-  height: 150px;
+  height: 50px;
   width: 100%;
 }
 
