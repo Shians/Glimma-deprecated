@@ -615,7 +615,7 @@ function dotPlot(targetDiv, geneID, transition) {
 	if (svgDot.select('.axis_text').node() == null) {
 		// xLabel(svgDot, 'Group');
 		yLabel(svgDot, 'Expression');
-		plotTitle(svgDot, 'Sample LogCPM');
+		plotTitle(svgDot, 'Sample Expression');
 	}
 }
 

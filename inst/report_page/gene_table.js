@@ -37,9 +37,11 @@ function makeTable(targetDiv, data) {
         $('#gene_table_wrapper').css("visibility", "visible");
     });
 
+	// Add click function to table for highlight on MA plot
+	symbInd = colnames.indexOf("symb") + 1;
     d3.select("#gene_table").selectAll("tr")
     	.on("click", function(d) {
-    		var symb = d3.select(this).select("td:nth-child(5)").text();
+    		var symb = d3.select(this).select("td:nth-child("+String(symbInd)+")").text();
     		findGeneAndHighlight(symb);
     		});
 }
