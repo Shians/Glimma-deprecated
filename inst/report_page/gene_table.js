@@ -1,4 +1,5 @@
 function makeTable(targetDiv, data) {
+	$('.foot_div').css("visibility", "hidden");
 	// Create and select table skeleton
 	var tableSelect = targetDiv.append("table")
 								.attr("class", "display compact")
@@ -34,7 +35,7 @@ function makeTable(targetDiv, data) {
         	"bLengthChange": false,
         	"order": [[ pValInd, "asc" ]]
         } );
-        $('#gene_table_wrapper').css("visibility", "visible");
+        $('.foot_div').css("visibility", "visible");
     });
 
 	// Add click function to table for highlight on MA plot
