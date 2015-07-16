@@ -5,7 +5,7 @@
 	Interactive version of plotMD from the limma package.
 }
 \description{
-	This function produces a MD (mean-difference) plot that the user search for genes in, with a second panel showing either the
+	This function produces a MD (mean-difference) plot that the user can search for genes in, with a second panel showing either the
 	individual expression values or the trend of variability versus abundance (SA plot).
 }
 \usage{
@@ -51,7 +51,7 @@ interactiveMDplot(object, y, groups, genes=NULL, p.value=0.05, lfc=0, adjust.met
 \author{Shian Su, Matt Ritchie}
 
 \seealso{
-	\code{\link{interactiveMDSPlot}}
+	\code{\link{interactiveMDSplot}}
 }
 \examples{
 \dontrun{
