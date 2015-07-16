@@ -47,7 +47,7 @@ interactivebarcodeplot(stats, index=TRUE, genes,
 \author{Shian Su, Matt Ritchie}
 
 \seealso{
-	\code{\link{interactiveMAplot}}
+	\code{\link{interactiveMDplot}}
 }
 
 \examples{
