@@ -1,7 +1,7 @@
 \title{Interactive version of Multidimensional scaling plot of distances between gene expression profiles}
-\name{interactiveMDSplot}
-\alias{interactiveMDSplot}
-\alias{interactiveMDSplot.default}
+\name{interactiveMDSPlot}
+\alias{interactiveMDSPlot}
+\alias{interactiveMDSPlot.default}
 
 \description{
 Plot samples on an interactive two-dimensional scatterplot so that distances on the plot approximate 
@@ -9,7 +9,7 @@ the typical log2 fold changes between the samples.
 }
 
 \usage{
-\method{interactiveMDSplot}(x, col, top = 500, labels = NULL,
+\method{interactiveMDSPlot}(x, col, top = 500, labels = NULL,
         gene.selection = "pairwise", dir = NULL, launch=TRUE, main=NULL)
 }
 
@@ -18,7 +18,9 @@ the typical log2 fold changes between the samples.
   \item{top}{number of top genes used to calculate pairwise distances.}
   \item{labels}{character vector of sample names or labels. Defaults to \code{colnames(x)}.}
   \item{gene.selection}{character, \code{"pairwise"} to choose the top genes separately for each pairwise comparison between the samples or \code{"common"} to select the same genes for all comparisons.}
-
+  \item{dir}{character string indicating the output directory for the plot.}
+  \item{launch}{\code{logical}. Should the resulting plot be displayed?}
+  \item{main}{character string specifying the title of the html page.}
 }
 
 \details{
