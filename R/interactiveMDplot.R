@@ -30,7 +30,7 @@ createMAJson <- function(MArrayLM, Elist, sample.groups, genes, labels, p.value=
 }
 
 # Function to write report
-interactiveMDPlot <- function(object, y, groups, genes=NULL, p.value=0.05, lfc=0, adjust.method="BH",
+interactiveMDplot <- function(object, y, groups, genes=NULL, p.value=0.05, lfc=0, adjust.method="BH",
                          labels=NULL, coef=NULL, baseURL="http://www.ncbi.nlm.nih.gov/gene/?term=", 
                          searchBy="Symbol", linkBy="GeneID", 
                          dir=NULL, launch=TRUE, main=NULL) {
