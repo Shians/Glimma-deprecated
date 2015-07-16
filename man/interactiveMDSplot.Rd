@@ -1,16 +1,15 @@
-\title{Interactive version of Multidimensional scaling plot of distances between gene expression profiles}
-\name{interactiveMDSPlot}
-\alias{interactiveMDSPlot}
-\alias{interactiveMDSPlot.default}
+\title{Interactive version of plotMDS (Multidimensional scaling plot) from the limma package}
+\name{interactiveMDSplot}
+\alias{interactiveMDSplot}
+\alias{interactiveMDSplot.default}
 
 \description{
-Plot samples on an interactive two-dimensional scatterplot so that distances on the plot approximate 
+This function produces an interactive two-dimensional scatterplot so that distances on the plot approximate 
 the typical log2 fold changes between the samples.
 }
 
 \usage{
-\method{interactiveMDSPlot}(x, col, top = 500, labels = NULL,
-        gene.selection = "pairwise", dir = NULL, launch=TRUE, main=NULL)
+interactiveMDSplot(x, col, top = 500, labels = NULL, gene.selection = "pairwise", dir = NULL, launch=TRUE, main=NULL)
 }
 
 \arguments{
@@ -24,7 +23,9 @@ the typical log2 fold changes between the samples.
 }
 
 \details{
-This function is a variation on the usual multdimensional scaling (or principle coordinate) plot, in that a distance measure particularly appropriate for the microarray context is used.
+This function generates an interactive MDS (multdimensional scaling) plot, based on the \code{plotMDS} function from the limma package.
+
+This plot is a variation on the usual multidimensional scaling (or principle coordinate) plot, in that a distance measure particularly appropriate for the microarray context is used.
 The distance between each pair of samples (columns) is the root-mean-square deviation (Euclidean distance) for the top \code{top} genes.
 Distances on the plot can be interpreted as \emph{leading log2-fold-change}, meaning
 the typical (root-mean-square) log2-fold-change between the samples for the genes that distinguish those samples.
@@ -32,12 +33,10 @@ the typical (root-mean-square) log2-fold-change between the samples for the gene
 If \code{gene.selection} is \code{"common"}, then the top genes are those with the largest standard deviations between samples.
 If \code{gene.selection} is \code{"pairwise"}, then a different set of top genes is selected for each pair of samples.
 The pairwise feature selection may be appropriate for microarray data when different molecular pathways are relevant for distinguishing different pairs of samples.
-
-See \code{\link[graphics]{text}} for possible values for \code{col} and \code{cex}.
 }
 
 \value{
-A interactive plot is created on the current graphics device.
+An html page with an interactive MDS plot in which the dimensions plotted can be changed by the user.
 }
 
 \author{Shian Su}
@@ -50,19 +49,25 @@ limma powers differential expression analyses for RNA-sequencing and microarray 
 }
 
 \seealso{
-\code{\link{plotMDS}} from the limma package, on which this function is based.
+\code{\link{plotMDS}} from the limma package, \code{interactiveMDplot}.
 }
 
 \examples{
-# Simulate gene expression data for 1000 probes and 6 microarrays.
-# Samples are in two groups
-# First 50 probes are differentially expressed in second group
-sd <- 0.3*sqrt(4/rchisq(1000,df=4))
-x <- matrix(rnorm(1000*6,sd=sd),1000,6)
-rownames(x) <- paste("Gene",1:1000)
-x[1:50,4:6] <- x[1:50,4:6] + 2
-# without labels, indexes of samples are plotted.
-mds <- plotMDS(x,  col=c(rep("black",3), rep("red",3)) )
-# or labels can be provided, here group indicators:
-plotMDS(mds,  col=c(rep("black",3), rep("red",3)), labels= c(rep("Grp1",3), rep("Grp2",3)))
+\dontrun{
+  library(Glimma)
+  library(edgeR)
+  load("x.rda")
+  # RNA-seq data set available from GEO under accession number GSE64099
+  # filter out genes with low read counts
+  sel = rowSums(cpm(x$counts)>0.5)>=3
+  x = x[sel,]
+  x$genes = x$genes[,c(1,3)]
+  des = model.matrix(~x$samples$group)
+  colnames(des)[2] = "Smchd1nullvsWt"
+  x = calcNormFactors(x, method="TMM")
+  genotype = x$samples$group
+
+  # See how replicate sample cluster
+  interactiveMDSplot(x, labels=1:7, col=as.numeric(genotype), main="MDS plot for Smchd1 experiment")
+}
 }
