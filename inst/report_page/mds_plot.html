@@ -12,7 +12,7 @@
 	<script type='text/javascript' src='mds_data.js'></script>
 	<script type='text/javascript' src='mds_plot.js'></script>
 
-	<link rel='stylesheet' href='plot_styles.css'></link>
+	<link rel='stylesheet' href='mds_styles.css'></link>
 
 	<title>MDS Plot</title>
 </head>
@@ -34,8 +34,33 @@
 	  	</div>
 
 	  	<div class='mid_div'>
-	  		<div class'plot mds'>
+	  		<div class="plot_div left">
 	  			<div class='tooltip_mds'></div>
+	  		</div>
+
+	  		<div class="plot_sep"></div>
+
+	  		<div class='plot_div right'>
+	  			<div class="dropdowns">
+					<form method="post">
+						Colour points by: <br/ >
+						<select name="drop_highlight">
+						</select> <br />
+						Filter points by:
+						<select name="drop_filter">
+						</select> <br />
+						Plot type: <br/ >
+						<select name="drop_type">
+							<option value="p">Points</option>
+							<option value="l">Labels</option>
+							<option value="pl">Both</option>
+						</select> <br />
+						Point size: <br/ >
+						<input id="radius" type="range" value=60 min=10 max=100 step=2 oninput="updateCircleRad(this.value)"/>
+						<br/ >
+					</form>
+	  			</div>
+	  			<div class="plot_div skree"></div>
 	  		</div>
 	  	</div>
 
@@ -44,5 +69,11 @@
 		</div>
 	</div>
 	<script>
+	var divMDS = d3.select('.plot_div.left');
+	mdsPlot(divMDS, dataMDS, 1, 2);
+
+	eigenVals = eigenVals.map(function (d) { return d/eigenSum; });
+	var divSkree = d3.select('.plot_div.skree');
+	skreePlot(divSkree, eigenVals)
 	</script>
 </body>

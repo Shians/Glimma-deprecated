@@ -1,0 +1,257 @@
+.main_window {
+  /*background: aliceblue;*/
+  position: relative;
+  overflow: hidden;
+  font-family: Arial;
+  height: 600px;
+  width: 1100px;
+  margin: 0 auto;
+}
+
+.load_screen {
+  position: absolute;
+  display: none;
+  height: 100%;
+  width: 100%;
+  /*background: black;*/
+  opacity: 0.8;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.head_div {
+  /*background: darkcyan;*/
+  position: relative;
+  overflow: hidden;
+  height: 50px;
+  width: 100%;
+}
+
+.top_div {
+  /*background: pink;*/
+  position: relative;
+  overflow: hidden;
+  height: 50px;
+  width: 100%;
+}
+
+.mid_div {
+  /*background: lightblue;*/
+  position: relative;
+  overflow: hidden;
+  height: 500px;
+  width: 100%;
+}
+
+.bot_div { 
+  /*background: pink;*/
+  position: relative;
+  overflow: hidden;
+  height: 50px;
+  width: 100%;
+}
+
+.foot_div {
+  /*background: darkcyan;*/
+  position: relative;
+  overflow: hidden;
+  height: 350px;
+  width: 100%;
+}
+
+.plot_div {
+  /*background: lightgreen;*/
+  position: relative;
+  overflow: hidden;
+  float: left;
+  height: 100%;
+  width: 65%;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  /*
+   Introduced in IE 10.
+   See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+  */
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.plot_div {
+  /*background: lightgreen;*/
+  position: relative;
+  overflow: hidden;
+  float: left;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  /*
+   Introduced in IE 10.
+   See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+  */
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.plot_div.left {
+  height: 100%;
+  width: 65%;
+}
+
+.plot_div.right {
+  height: 100%;
+  width: 30%;
+}
+
+.plot_div.skree {
+  /*background: green;*/
+  height: 50%;
+  width: 100%; 
+}
+
+.plot_sep {
+  /*background: salmon;*/
+  position: relative;
+  overflow: hidden;
+  float: left;
+  height: 100%;
+  width: 5%;
+}
+
+.plot.skree {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.dropdowns {
+  /*background: yellow;*/
+  position: relative;
+  overflow: hidden;
+  float: left;
+  left: 20%;
+  height: 50%;
+  width: 80%; 
+  align: center;
+}
+
+.page_title {
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  overflow: hidden;
+  float: left;
+  height: 100%;
+  width: 100%;
+
+  text-anchor: middle;
+  font-size: 24px;
+
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  /*
+   Introduced in IE 10.
+   See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+  */
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.mds {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.buttons_container {
+  /*background: lightsalmon;*/
+  position: relative;
+  overflow: hidden;
+  float: left;
+  height: 100%;
+  width: 50%;
+}
+
+/* Generated using http://css3buttongenerator.com/ */
+.btn {
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  color: #000000;
+  font-size: 11px;
+  background: #E7E7E7;
+  width: 130px;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+  outline:none;
+}
+
+.btn:hover {
+  background: #F7F7F7;
+  text-decoration: none;
+}
+
+.btn:active {
+  background: #D7D7D7;
+}
+ select {
+  width: 90%;
+
+ }
+
+.axis {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  /*
+   Introduced in IE 10.
+   See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+  */
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis_text {
+  text-anchor: middle;
+  font-size: 16px;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  /*
+   Introduced in IE 10.
+   See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+  */
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.bar {
+  fill: steelblue;
+  opacity: 0.8;
+}
+
+.bar:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.point {
+  opacity: 0.6;
+}
+
+.point:hover {
+  opacity: 1;
+}
