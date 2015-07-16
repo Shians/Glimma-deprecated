@@ -268,7 +268,7 @@ function barcodePlot(targetDiv, data) {
 								.classed('plot barcode', true);
 	var plotWindow = svgBarcode.append('g')
 								.classed('plot_window', true)
-								.attr('transform', trans(G_MARG.top, G_MARG.left));
+								.attr('transform', trans(G_MARG.left, G_MARG.top));
 
 	var background = plotWindow.append('g')
 								.classed('back barcode', true);

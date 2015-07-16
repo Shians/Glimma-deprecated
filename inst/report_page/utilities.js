@@ -38,11 +38,12 @@ function boop() {
 }
 
 // Function to obtain the width and height of the svg as well as plotting area
-function divDim(div) {
+function divDim(div, marg) {
+	var marg = marg || G_MARG;
 	var svgh = div.style('height');
-	var plth = pxToNum(svgh) - G_MARG.top - G_MARG.bottom;
+	var plth = pxToNum(svgh) - marg.top - marg.bottom;
 	var svgw = div.style('width');
-	var pltw = pxToNum(svgw) - G_MARG.left - G_MARG.right;
+	var pltw = pxToNum(svgw) - marg.left - marg.right;
 
 	return {'svgh': svgh, 'svgw': svgw, 'plth': plth, 'pltw': pltw};
 }
@@ -65,22 +66,24 @@ function trans(top, left) {
 }
 
 // Function to draw x axis
-function xAxis(targetSvg, xScl, svgh, svgw) {
+function xAxis(targetSvg, xScl, svgh, svgw, marg) {
+	var marg = marg || G_MARG;
 	var xAxis = d3.svg.axis().scale(xScl).orient('bottom');	
 	
-	var top = pxToNum(svgh) - G_MARG.bottom;
+	var top = pxToNum(svgh) - marg.bottom;
 	var xg = targetSvg.append('g')
 							.attr('class', 'axis x')
-							.attr('transform', trans(G_MARG.left, top));
+							.attr('transform', trans(marg.left, top));
 	xg.call(xAxis);
 }
 
 // Function to draw y axis
-function yAxis(targetSvg, xScl, svgh, svgw) {
+function yAxis(targetSvg, yScl, svgh, svgw, marg) {
+	var marg = marg || G_MARG;
 	var yAxis = d3.svg.axis().scale(yScl).orient('left');
 	var yg = targetSvg.append('g')
 			  				.attr('class', 'axis y')
-			  				.attr('transform', trans(G_MARG.left, G_MARG.top));
+			  				.attr('transform', trans(marg.left, marg.top));
 	yg.call(yAxis);
 }
 
@@ -90,8 +93,12 @@ function xLabel(svg, text, yoffset) {
 	var svgw = pxToNum(svg.style('width'));
 	var yoff = yoffset || (svgh - 10);
 
+	if (svg.select('.axis_text.x') != null) {
+		svg.select('.axis_text.x').remove();
+	}
+
   	svg.append('text')
-  		.classed('axis_text', true)
+  		.classed('axis_text x', true)
         .attr('x', (svgw)/2)
         .attr('y', svgh - 10)
         .text(text);
@@ -106,8 +113,12 @@ function yLabel(svg, text, yoffset) {
 	var svgw = Number(svgw.substr(0, svgw.length - 2));
 	var yoff = yoffset || 15;
 
+	if (svg.select('.axis_text.y') != null) {
+		svg.select('.axis_text.y').remove();
+	}
+
  	svg.append('text')
- 		.classed('axis_text', true)
+ 		.classed('axis_text y', true)
 	    .attr('transform', 'rotate(-90)')
 	    .attr('y', yoff)
 	    .attr('x', 0 - svgh / 2)

@@ -121,7 +121,6 @@ function drawAxis(targetSvg, xScl, yScl, svgh, svgw, transition) {
 	} else {
 		yg.call(yAxis);
 	}
-	
 }
 
 // Function to create x axis label
@@ -288,6 +287,24 @@ function togglePointMA(node, action) {
 	}
 }
 
+// Function to perform actions on clicking points on MA plot
+// *** Currently not in use, need to properly implement exact searching.
+function togglePointTab(node, action) {
+	// Get data, front svg, front circle and dot plot svg.
+	var d = node.data()[0];
+	var front = d3.select('.front')
+	var circle = d3.selectAll('.front_circle');
+	var dotDiv = d3.select('.side_plot');
+
+	if (action == 'on') {
+		// Search gene table using GeneID
+		table.column(0).search('"' + d.GeneID + '"').draw();
+	} else if (action == 'off') {
+		// Clear gene table search
+		table.column(0).search("").draw();
+	}
+}
+
 // Function to operate main plot click response
 function mainClick(node) {
 	if (node.attr('clicked') == 0) {
@@ -298,11 +315,13 @@ function mainClick(node) {
 		G_CLICKED_POINTS.push(node);
 		G_CLICKED = 1;
 		node.attr('clicked', 1);
+		// togglePointTab(node, 'on'); // *** Currently not in use, need to properly implement exact searching.
 		togglePointMA(node, 'on');
 		togglePointSA(node, 'on');
 	} else {
 		G_CLICKED = 0;
 		node.attr('clicked', 0);
+		// togglePointTab(node, 'off'); // *** Currently not in use, need to properly implement exact searching.
 		togglePointMA(node, 'off');
 		togglePointSA(node, 'off');
 	}
@@ -415,7 +434,7 @@ function maPlot(targetDiv, data) {
 
 	var plotWindow = svgMA.append('g')
 							.classed('plot_window', true)
-							.attr('transform', trans(G_MARG.top, G_MARG.left));
+							.attr('transform', trans(G_MARG.left, G_MARG.top));
 
 	var cirContain = plotWindow.append('g')
 								.classed('circles_container', true);
@@ -567,7 +586,7 @@ function dotPlot(targetDiv, geneID, transition) {
 
 		var plotWindow = svgDot.append('g')
 								.classed('plot_window', true)
-								.attr('transform', trans(G_MARG.top, G_MARG.left));
+								.attr('transform', trans(G_MARG.left, G_MARG.top));
 
 		var dotContain = plotWindow.append('g')
 									.classed('dot_container', true);
@@ -586,7 +605,7 @@ function dotPlot(targetDiv, geneID, transition) {
 				.style('fill', function (d, i) { return distinctColours[i]; });
 				
 
-	if (transition == true){
+	if (transition == true) {
 		dots.transition()
 		.attr('height', rectSize)
 		.attr('width', rectSize)
@@ -698,7 +717,7 @@ function saPlot(targetDiv, data, trendData) {
 
 		var plotWindow = svgSA.append('g')
 								.classed('plot_window', true)
-								.attr('transform', trans(G_MARG.top, G_MARG.left));
+								.attr('transform', trans(G_MARG.left, G_MARG.top));
 		var saContain = plotWindow.append('g')
 									.classed('sa_container', true);
 

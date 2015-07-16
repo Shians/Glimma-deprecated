@@ -1,5 +1,5 @@
 function makeTable(targetDiv, data) {
-	$('.foot_div').css("visibility", "hidden");
+	$('.foot_div').css("visibility", "hidden"); // Hide table until style loads
 	// Create and select table skeleton
 	var tableSelect = targetDiv.append("table")
 								.attr("class", "display compact")
@@ -31,8 +31,9 @@ function makeTable(targetDiv, data) {
 
 	// Apply DataTable formatting: https://www.datatables.net/
 	$(document).ready(function() {
-        $('#gene_table').DataTable( {
-        	"bLengthChange": false,
+        table = $('#gene_table').DataTable( {
+        	"bLengthChange": false, // Disable page size change
+        	"bDeferRender": true,
         	"order": [[ pValInd, "asc" ]]
         } );
         $('.foot_div').css("visibility", "visible");
