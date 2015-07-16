@@ -1,8 +1,8 @@
-interactiveMDSPlot <- function(x, ...) {
+interactiveMDSplot <- function(x, ...) {
   UseMethod("interactiveMDSPlot")
 }
 
-interactiveMDSPlot.default <- function(x, col, top=500, labels = NULL, gene.selection = "pairwise", dir=NULL, launch=TRUE, main=NULL) {
+interactiveMDSplot.default <- function(x, col, top=500, labels = NULL, gene.selection = "pairwise", dir=NULL, launch=TRUE, main=NULL) {
 	#------------------------------------------------------------
   	# Check for errors
   	#------------------------------------------------------------
