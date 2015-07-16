@@ -69,8 +69,7 @@ interactiveMDplot(object, y, groups, genes=NULL, p.value=0.05, lfc=0, adjust.met
   genotype = x$samples$group
 
   # See how replicate sample cluster
-  plotMDS(x, labels=1:7, col=as.numeric(genotype), main="MDS plot for Smchd1 experiment")
-  legend("topright", legend=c("WT", "Smchd1 null"), pch=15, col=1:2)
+  interactiveMDSplot(x, labels=1:7, col=as.numeric(genotype), main="MDS plot for Smchd1 experiment")
 
   # Apply voom with sample quality weights
   v = voomWithQualityWeights(x, design=des, normalization="none", plot=TRUE)
