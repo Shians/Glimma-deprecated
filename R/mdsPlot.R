@@ -1,5 +1,5 @@
 interactiveMDSplot <- function(x, ...) {
-  UseMethod("interactiveMDSPlot")
+  UseMethod("interactiveMDSplot")
 }
 
 interactiveMDSplot.default <- function(x, col, top=500, labels = NULL, gene.selection = "pairwise", dir=NULL, launch=TRUE, main=NULL) {
