@@ -73,7 +73,7 @@ interactiveMDSplot.default <- function(x, col, top=500, labels = NULL, gene.sele
 			dd[i, 1L:(i - 1L)] = sqrt(colMeans((x[, i] - x[, 1:(i - 1), drop = FALSE])^2))
 		}
 	}
-	a1 <- suppressWarnings(cmdscale(as.dist(dd), k=min(10, nprobes), eig=TRUE))
+	a1 <- suppressWarnings(cmdscale(as.dist(dd), k=min(10, nsamples-1), eig=TRUE))
 
 	dmatrix <- a1$points
 	eigvals <- round(a1$eig, 3)[1:10]
