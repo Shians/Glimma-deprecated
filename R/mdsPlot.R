@@ -77,6 +77,7 @@ interactiveMDSplot.default <- function(x, col, top=500, labels = NULL, gene.sele
 
 	dmatrix <- a1$points
 	eigvals <- round(a1$eig, 3)[1:10]
+	eigvals[is.na(eigvals)] <- 0
 	eigsum <- round(sum(a1$eig), 3)
 	
 	if (is.character(col)) {

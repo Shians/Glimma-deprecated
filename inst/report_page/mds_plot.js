@@ -37,15 +37,43 @@ function drawAxis(targetSvg, xScl, yScl, svgh, svgw, transition) {
 	
 }
 
-// Function to perform actions when mouse over MDS plot
-function MDSMOver(node) {
+// Function to perform actions when mouse over on MDS plot
+function MDSMOver(targetSvg, node, i) {
+	var dim = divDim(targetSvg);
 	var d = node.data()[0];
 
 	var x = node.attr('cx');
 	var y = node.attr('cy');
 
-	console.log(x);
-	console.log(y);
+	var lab = targetSvg.select('.plot_window')
+						.append('text')
+						.attr('class', 'label n' + String(i))
+						.attr('font-size', '12px')
+						.html(d.label);
+	
+	if (parseFloat(x) < dim.pltw/2) {
+		lab.attr('text-anchor', 'start')
+			.attr('x', x + 5)
+			.attr('y', y - 10);
+	} else {
+		lab.attr('text-anchor', 'end')
+			.attr('x', x - 5)
+			.attr('y', y - 10);
+	}
+	
+}
+
+// Function to perform action when mouse out on MDS plot
+function MDSMOut(targetSvg, node, i) {
+	var d = node.data()[0];
+
+	targetSvg.select('.label' + '.n' + i).remove()
+}
+
+// Function to update MDS plot style
+function updateMDSType(type) {
+	var divMDS = d3.select('.plot_div.left');
+	mdsPlot(divMDS, dataMDS, 1, 2);
 }
 
 // Function to draw MDS plot
@@ -55,8 +83,16 @@ function mdsPlot(targetDiv, data, dim1, dim2, colOpt) {
 		return;
 	}
 
+	// Check if dim1 + 2 = dim2 + 1 = 0
+	if (eigenVals[dim1] == 0) {
+		return;
+	}
+
 	// Set default colour option
 	colOpt = colOpt || 'col';
+
+	// Get plot type
+	type = $('[name="drop_type"]').val();
 
 	// Get dimension data
 	var dim = divDim(targetDiv);
@@ -96,20 +132,53 @@ function mdsPlot(targetDiv, data, dim1, dim2, colOpt) {
 		var plotWindow = svgMDS.select('.plot_window');
 		var mdsContain = plotWindow.select('.mds_container');
 	}
-	
-	// Attach points
-	var points = mdsContain.selectAll('.point')
+
+	if (type == 'p') {
+		mdsContain.selectAll('text.point').remove();
+		d3.select('.point_size').style('display', 'block');
+
+		// Attach points
+		var points = mdsContain.selectAll('.point')
 							.data(data);
 
-	points.enter().append('circle');
-	points.attr('class', 'point')
-			.attr('r', 6)
-			.style('fill', function (d) { return d[colOpt]; })
-			.on('mouseover', function (d) { return MDSMOver(d3.select(this)); });
+		points.enter().append('circle');
+		points.attr('class', 'point')
+				.attr('r', 6)
+				.style('fill', function (d) { return d[colOpt]; })
+				.on('mouseover', function (d, i) { return MDSMOver(svgMDS, d3.select(this), i); })
+				.on('mouseout', function (d, i) { return MDSMOut(svgMDS, d3.select(this), i); });
 
-	points.transition()
-			.attr('cx', function (d) { return xScl(d[dim1]); })
-			.attr('cy', function (d) { return yScl(d[dim2]); });
+		points.transition()
+				.attr('cx', function (d) { return xScl(d[dim1]); })
+				.attr('cy', function (d) { return yScl(d[dim2]); });
+	} else if (type = 'l') {
+		mdsContain.selectAll('circle.point').remove();
+		d3.select('.point_size').style('display', 'none');
+
+		// Attach points
+		var points = mdsContain.selectAll('.point')
+							.data(data);
+
+		points.enter().append('text');
+
+		points.attr('class', 'point')
+				.html(function(d) { return d.label; })
+				.style('font-anchor', 'middle')
+				.style('fill', function (d) { return d[colOpt]; });
+
+		points.transition()
+				.attr('x', function (d) { return xScl(d[dim1]); })
+				.attr('y', function (d) { return yScl(d[dim2]); })
+	} else if (type = 'pl') {
+		points.enter().append('circle');
+		points.attr('class', 'point')
+				.attr('r', 6)
+				.style('fill', function (d) { return d[colOpt]; });
+
+		points.transition()
+				.attr('cx', function (d) { return xScl(d[dim1]); })
+				.attr('cy', function (d) { return yScl(d[dim2]); });
+	}
 			
 
 	drawAxis(svgMDS, xScl, yScl, dim.svgh, dim.svgw);
@@ -161,7 +230,7 @@ function skreePlot(targetDiv, data) {
 		.attr('x', function (d, i) { return xScl(i + 1); })
 		.attr('y', function (d) { return yScl(d); })
 		.attr('height', function (d) { return dim.plth - yScl(d); })
-		.attr("width", xScl.rangeBand())
+		.attr('width', xScl.rangeBand())
 		.on('click', function(d, i) { skreeClick(i+1) ;});
 
 

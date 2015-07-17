@@ -43,21 +43,23 @@
 	  		<div class='plot_div right'>
 	  			<div class="dropdowns">
 					<form method="post">
-						Colour points by: <br/ >
+						<!-- Colour points by: <br/ >
 						<select name="drop_highlight">
-						</select> <br />
-						Filter points by:
+						</select> <br /> -->
+						<!-- Filter points by:
 						<select name="drop_filter">
-						</select> <br />
+						</select> <br /> -->
 						Plot type: <br/ >
-						<select name="drop_type">
+						<select name="drop_type" onchange="updateMDSType(this.value)">
 							<option value="p">Points</option>
 							<option value="l">Labels</option>
-							<option value="pl">Both</option>
+							<!-- <option value="pl">Both</option> -->
 						</select> <br />
-						Point size: <br/ >
-						<input id="radius" type="range" value=60 min=10 max=100 step=2 oninput="updateCircleRad(this.value)"/>
-						<br/ >
+						<div class='point_size'>
+							Point size: <br/ >
+							<input id="radius" type="range" value=60 min=10 max=100 step=2 oninput="updateCircleRad(this.value)"/>
+							<br/ >
+						</div>
 					</form>
 	  			</div>
 	  			<div class="plot_div skree"></div>

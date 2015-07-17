@@ -255,3 +255,7 @@
 .point:hover {
   opacity: 1;
 }
+
+.label {
+  pointer-events: none;
+}
