@@ -184,6 +184,7 @@ function mdsPlot(targetDiv, data, dim1, dim2, colOpt) {
 	drawAxis(svgMDS, xScl, yScl, dim.svgh, dim.svgw);
 	xLabel(svgMDS, 'Dimension ' + String(dim1));
 	yLabel(svgMDS, 'Dimension ' + String(dim2));
+	plotTitle(svgMDS, pageTitle);
 }
 
 function skreeClick(i) {

@@ -101,12 +101,14 @@ interactiveMDSplot.default <- function(x, col, top=500, labels = NULL, gene.sele
 
 	eigjs <- arrayify(paste(eigvals, collapse=","))
 
+	plot.title <- quotify(main)
+
 	#------------------------------------------------------------
   	# Output
   	#------------------------------------------------------------
   
 	data.filename <- paste(report.path, "/mds_data.js", sep="")
-	printJsonToFile(c(js, eigjs, eigsum), filename=data.filename,
-					varname=c("dataMDS", "eigenVals", "eigenSum"))
+	printJsonToFile(c(js, eigjs, eigsum, plot.title), filename=data.filename,
+					varname=c("dataMDS", "eigenVals", "eigenSum", "pageTitle"))
 
 }
