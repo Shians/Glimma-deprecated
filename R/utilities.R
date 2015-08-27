@@ -12,18 +12,27 @@ quotify <- function(x) {
 
 # Function to add square brackets around string
 arrayify <- function(x) {
-  paste("[", x, "]", sep="")
+  paste("[", paste(x, collapse=","), "]", sep="")
+}
+
+# Function to add square brackets around string
+objectify <- function(x, y) {
+  paste("{", paste(x, y, sep=":", collapse=","), "}", sep="")
 }
 
 # Function to convert dataframe into JSON object
 makeDFJson <- function(df) {
+  if (is(df, "matrix")) {
+    df <- data.frame(df)
+  }
+
   if (!is(df, "data.frame")) {
     stopType("data.frame")
   }
 
   for (n in names(df) ) {
     if (!is(df[[n]], "numeric")) {
-      df[[n]] <- quotify(df[[n]])
+      df[[n]] <- quotify(as.character(df[[n]]))
     }
   }
 
